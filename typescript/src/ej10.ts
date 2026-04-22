@@ -15,11 +15,9 @@ export function err<T>(error: string): Result<T, string> {
 
 // Si result es error, propaga. Si ok, aplica validator al valor.
 export function chain<T>(result: Result<T, string>, validator: Validator<T>): Result<T, string> {
-  if (result.status === "ok") {
-    return validator(result.value);
-  }
-
-  return result;
+  return result.status === "ok"
+    ? validator(result.value)
+    : result;
 }
 
 // Encadena: nombre requerido, email válido (tiene @ y .), password >= 8 chars.
@@ -33,28 +31,13 @@ export function validateForm(data: FormData): Result<FormData, string> {
   const passwordLongEnough = (d: FormData) => 
     d.password.length >= 8 ? ok(d) : err("contraseña muy corta");
 
-  const paso1 = nameRequired(data);
-  const paso2 = chain(paso1, emailValido);
-  const result = chain(paso2, passwordLongEnough);
-
-  return result;
+  return [nameRequired, emailValido, passwordLongEnough]
+    .reduce((acc, validator) => chain(acc, validator), ok(data));
 }
 
 // 400 + error si falla, 200 + user si ok.
 export function handleResult(result: Result<FormData, string>): { status: number; body: unknown } {
-  if (result.status === "ok") {
-    return {
-      status: 200,
-      body: {
-        user: result.value
-      }
-    };
-  } else {
-    return {
-      status: 400,
-      body: {
-        error: result.error
-      }
-    };
-  }
+  return result.status === "ok"
+  ? { status: 200, body: { user: result.value } }
+  : { status: 400, body: { error: result.error } };
 }

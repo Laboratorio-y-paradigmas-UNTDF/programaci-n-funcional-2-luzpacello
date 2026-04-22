@@ -16,7 +16,7 @@ export function compose<T>(...fns: Array<(x: T) => T>): (x: T) => T {
 }
 
 const trim = (s: string) => s.trim();
-const lower = (s: string) => s.toLocaleLowerCase();
+const lower = (s: string) => s.toLowerCase();
 const ensureDomain = (s: string) => s.includes('@') ? s: `${s}@empresa.com`;
 
 // Pipeline que aplica trim, toLowerCase, y agrega @empresa.com si no tiene @.

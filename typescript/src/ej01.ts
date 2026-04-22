@@ -25,9 +25,8 @@ export function obtenerTotalesActivas(ordenes: Orden[]): number[] {
 
 // Cuenta cuántas órdenes hay por cada categoría (usar reduce).
 export function contarPorCategoria(ordenes: Orden[]): Record<string, number> {
-  return ordenes.reduce((acc, orden) => {
-    const cat = orden.categoria;
-    acc[cat] = (acc[cat] || 0) + 1;
-    return acc;
-  }, {} as Record<string, number>);
+  return ordenes.reduce((acc, orden) => ({
+    ...acc,
+    [orden.categoria]: (acc[orden.categoria] || 0) + 1,
+  }), {} as Record<string, number>);
 }
