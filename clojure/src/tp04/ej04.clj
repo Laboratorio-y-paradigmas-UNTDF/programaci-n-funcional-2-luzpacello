@@ -6,7 +6,7 @@
   (->> ordenes
        (filter :activa?)
        (map :total)
-       (reduce +))
+       (reduce + 0))
   )
 
 ;; Filtra activas, devuelve vector de :cliente.
@@ -22,5 +22,5 @@
   (->> nums
        (filter even?)
        (map #(* % %))
-       (reduce +))
+       (reduce + 0))
   )

@@ -11,7 +11,7 @@
 
 ;; Retorna nueva orden con total reducido por porcentaje.
 (defn aplicar-descuento [porcentaje orden]
-  (update orden :total #(* % (- 1 (/ porcentaje 100))))
+  (update orden :total #(int (* % (- 1 (/ porcentaje 100)))))
   )
 
 ;; Pipeline: clasificar → separar → descuento 10% → sumar.
@@ -25,7 +25,7 @@
                         (remove :ok)
                         (map :error))
         aprobadas-desc (map #(aplicar-descuento 10 %) aprobadas)
-        total-final (reduce + (map :total aprobadas-desc))]
+        total-final (reduce + 0 (map :total aprobadas-desc))]
     {:aprobadas (vec aprobadas-desc)
      :rechazadas (vec rechazadas)
      :total-final total-final})

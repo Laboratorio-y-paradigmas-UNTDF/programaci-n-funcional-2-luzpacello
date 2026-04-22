@@ -18,14 +18,12 @@
 
 ;; Aplica todas las reglas a data. Retorna vector de {:field :error} (vacío si ok).
 (defn validate [rules data]
-  (reduce
-    (fn [acc {:keys [field pred msg]}]
-      (let [value (get data field)]
-        (if (pred value)
-          acc
-            (conj acc {:field field :error msg}))))
-    []
-    rules)
+  (->> rules
+    (map (fn [{:keys [field pred msg]}]
+            (let [value (get data field)]
+              (when-not (pred value)
+                {:field field :error msg}))))
+    (remove nil?))
   )
 
 ;; true si no hay errores.

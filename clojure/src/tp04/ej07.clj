@@ -4,7 +4,7 @@
 
 ;; Retorna {:status :ok :value value} si no vacío, {:status :error :error "FIELD es obligatorio"}.
 (defn required-field [field-name value]
-  (if (seq (clojure.string/trim value))
+  (if (seq (str/trim value))
     {:status :ok :value value}
     {:status :error :error (str field-name " es obligatorio")}
     )

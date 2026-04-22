@@ -3,7 +3,7 @@
 
 ;; Los primeros n pares positivos (2, 4, 6...).
 (defn primeros-n-pares [n]
-  (take n (map #(* 2 %) (iterate inc 1)))
+  (take n (iterate #(+ % 2) 2))
   )
 
 ;; Secuencia infinita de Fibonacci. DEBE ser lazy.
