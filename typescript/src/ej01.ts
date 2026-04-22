@@ -11,15 +11,23 @@ export type Orden = {
 
 // Filtra órdenes activas, extrae totales y los suma.
 export function filtrarActivasYSumar(ordenes: Orden[]): number {
-  throw new Error("TODO: implementar");
+  return ordenes
+    .filter((orden) => orden.activa) //filtra los objetos activos
+    .reduce((acc, orden) => acc + orden.total, 0); // acumula la suma de los totales
 }
 
 // Filtra las activas y devuelve un array con sus totales.
 export function obtenerTotalesActivas(ordenes: Orden[]): number[] {
-  throw new Error("TODO: implementar");
+  return ordenes
+    .filter(orden => orden.activa) //filtra los objetos activos
+    .map(orden => orden.total); //transforma el objeto Orden en solo un num total
 }
 
 // Cuenta cuántas órdenes hay por cada categoría (usar reduce).
 export function contarPorCategoria(ordenes: Orden[]): Record<string, number> {
-  throw new Error("TODO: implementar");
+  return ordenes.reduce((acc, orden) => {
+    const cat = orden.categoria;
+    acc[cat] = (acc[cat] || 0) + 1;
+    return acc;
+  }, {} as Record<string, number>);
 }

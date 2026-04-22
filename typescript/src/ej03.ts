@@ -14,20 +14,29 @@ export type User = {
 
 // Devuelve nueva persona con edad + 1.
 export function cumpleanios(p: Persona): Persona {
-  throw new Error("TODO: implementar");
+  const persona = {... p, edad: p.edad + 1};
+  return persona;
 }
 
 // Devuelve nueva persona con hobby agregado al final.
 export function agregarHobby(p: Persona, hobby: string): Persona {
-  throw new Error("TODO: implementar");
+  const persona: Persona = {... p, hobbies: [ ... p.hobbies, hobby]
+  };
+  return persona;
 }
 
 // Devuelve nueva persona con nombre actualizado.
 export function actualizarNombre(p: Persona, nombre: string): Persona {
-  throw new Error("TODO: implementar");
+  const persona = {... p, nombre: nombre};
+  return persona;
 }
 
 // Trim name, toLowerCase + trim email. Retorna nuevo objeto.
 export function normalizeUser(u: User): User {
-  throw new Error("TODO: implementar");
+  let nuevoName = u.name.trim();
+  let nuevoEmail = u.email.trim().toLowerCase();
+  const user = {
+    ... u, name: nuevoName, email: nuevoEmail}
+  
+    return user;
 }
