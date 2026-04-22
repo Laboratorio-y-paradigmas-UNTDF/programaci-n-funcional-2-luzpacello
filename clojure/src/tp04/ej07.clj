@@ -4,21 +4,26 @@
 
 ;; Retorna {:status :ok :value value} si no vacío, {:status :error :error "FIELD es obligatorio"}.
 (defn required-field [field-name value]
-  ;; TODO: implementar
+  (if (seq (clojure.string/trim value))
+    {:status :ok :value value}
+    {:status :error :error (str field-name " es obligatorio")}
+    )
   )
 
+(defn multiply [factor n] (* factor n))
+
 (def doble
-  ;; TODO: (partial * 2)
+  (partial multiply 2)
   )
 
 (def triple
-  ;; TODO: (partial * 3)
+  (partial multiply 3)
   )
 
 (def validate-name
-  ;; TODO: (partial required-field "nombre")
+  (partial required-field "nombre")
   )
 
 (def validate-email
-  ;; TODO: (partial required-field "email")
+  (partial required-field "email")
   )
